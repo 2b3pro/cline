@@ -633,12 +633,13 @@ func (sw *SetupWizard) removeProvider() error {
 		return fmt.Errorf("failed to get provider: %w", err)
 	}
 
-	// Extract provider ID
-	parts := strings.Split(selectedProvider, "(")
-	if len(parts) < 2 {
-		return fmt.Errorf("invalid provider selection")
+	// Extract provider ID from selection (it's the last part in parentheses)
+	lastOpenParen := strings.LastIndex(selectedProvider, "(")
+	lastCloseParen := strings.LastIndex(selectedProvider, ")")
+	if lastOpenParen == -1 || lastCloseParen == -1 || lastCloseParen < lastOpenParen {
+		return fmt.Errorf("invalid provider selection format")
 	}
-	providerID := strings.TrimSuffix(parts[1], ")")
+	providerID := strings.TrimSpace(selectedProvider[lastOpenParen+1 : lastCloseParen])
 
 	// Confirm removal
 	confirm := false
@@ -751,12 +752,13 @@ func (sw *SetupWizard) setDefaultProvider() error {
 		return fmt.Errorf("failed to get provider: %w", err)
 	}
 
-	// Extract provider ID
-	parts := strings.Split(selectedProvider, "(")
-	if len(parts) < 2 {
-		return fmt.Errorf("invalid provider selection")
+	// Extract provider ID from selection (it's the last part in parentheses)
+	lastOpenParen := strings.LastIndex(selectedProvider, "(")
+	lastCloseParen := strings.LastIndex(selectedProvider, ")")
+	if lastOpenParen == -1 || lastCloseParen == -1 || lastCloseParen < lastOpenParen {
+		return fmt.Errorf("invalid provider selection format")
 	}
-	providerID := strings.TrimSuffix(strings.Split(parts[1], ")")[0], "")
+	providerID := strings.TrimSpace(selectedProvider[lastOpenParen+1 : lastCloseParen])
 
 	// Set default provider
 	if err := sw.configManager.SetDefaultProvider(providerID); err != nil {
