@@ -1,10 +1,20 @@
 # Changelog
 
+## 3.32.7
+
+### Patch Changes
+
+- 3fa4106: Added checkpoints warning when users start a multiroot task
+- 63a3896: Added multiroot support for file mentions
+- 9b6a120: Added markdown support to focus chain text, allowing the model to display more interesting focus chains
+- 2917cd2: Added scripts to generate providers.go
+- 529bb3a: Refactored the Telemetry service to support multiple providers for a future where we support Otel
+
 ## [3.32.6]
 
 - Add experimental support for VSCode multi root workspaces
 - Add Claude Sonnet 4.5 to Claude Code provider
-- Add Glm 4.6 to Z AI provider 
+- Add Glm 4.6 to Z AI provider
 
 ## [3.32.5]
 
